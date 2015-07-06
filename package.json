@@ -1,0 +1,24 @@
+{
+  "name": "wmg-server",
+  "version": "0.0.0",
+  "description": "Rest API for WMG",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Game",
+    "MMO",
+    "Online",
+    "RPG"
+  ],
+  "author": "Arne Van Raepenbusch <arvraepe@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "mongoose": "^4.0.6",
+    "nano": "^6.1.4",
+    "node-uuid": "^1.4.3",
+    "restify": "^3.0.3",
+    "sha1": "^1.1.1",
+    "underscore": "^1.8.3"
+  }
+}
