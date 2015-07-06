@@ -8,33 +8,44 @@ var Items = require('../data/Items.js');
 var Environments = require('../data/Environments.js');
 var Quests = require('../data/Quests.js');
 
-//Item = mongoose.model('Item');
+require('../models/Quest.js');
+Quest = mongoose.model('Quest');
 
 function createRandomQuests (lvl, amount) {
     var quests = [];
     for (var i = amount; i > 0; i--) {
-        var QuestLevel = RandomHelper.randomInt(
-            lvl - 5 <= 1 ? 1 : lvl - 5, lvl + 5
+        var level = RandomHelper.randomInt(
+            lvl - 2 <= 1 ? 1 : lvl - 2, lvl + 2
         );
 
         var QuestMetaData = Quests.meta[RandomHelper.randomInt(0, Quests.meta.length)];
 
-        var QuestDescription = QuestMetaData.quest;
+        var description = QuestMetaData.quest;
 
-        QuestDescription = QuestDescription.replace('$pCommon', People.pCommon[RandomHelper.randomInt(0, People.pCommon.length)].name);
-        QuestDescription = QuestDescription.replace('$pImportant', People.pImportant[RandomHelper.randomInt(0, People.pImportant.length)].name);
-        QuestDescription = QuestDescription.replace('$pRoyalty', People.pRoyalty[RandomHelper.randomInt(0, People.pRoyalty.length)].name);
-        QuestDescription = QuestDescription.replace('$pFamily', People.pFamily[RandomHelper.randomInt(0, People.pFamily.length)].name);
-        QuestDescription = QuestDescription.replace('$pMonster', People.pMonster[RandomHelper.randomInt(0, People.pMonster.length)].name);
+        description = description.replace('$pCommon', People.pCommon[RandomHelper.randomInt(0, People.pCommon.length)].name);
+        description = description.replace('$pImportant', People.pImportant[RandomHelper.randomInt(0, People.pImportant.length)].name);
+        description = description.replace('$pRoyalty', People.pRoyalty[RandomHelper.randomInt(0, People.pRoyalty.length)].name);
+        description = description.replace('$pFamily', People.pFamily[RandomHelper.randomInt(0, People.pFamily.length)].name);
+        description = description.replace('$pMonster', People.pMonster[RandomHelper.randomInt(0, People.pMonster.length)].name);
 
-        QuestDescription = QuestDescription.replace('$iCommon', Items.iCommon[RandomHelper.randomInt(0, Items.iCommon.length)].name);
-        QuestDescription = QuestDescription.replace('$iExquisite', Items.iExquisite[RandomHelper.randomInt(0, Items.iExquisite.length)].name);
-        QuestDescription = QuestDescription.replace('$iUnique', Items.iUnique[RandomHelper.randomInt(0, Items.iUnique.length)].name);
+        description = description.replace('$iCommon', Items.iCommon[RandomHelper.randomInt(0, Items.iCommon.length)].name);
+        description = description.replace('$iExquisite', Items.iExquisite[RandomHelper.randomInt(0, Items.iExquisite.length)].name);
+        description = description.replace('$iUnique', Items.iUnique[RandomHelper.randomInt(0, Items.iUnique.length)].name);
 
-        QuestDescription = QuestDescription.replace('$eCity', Environments.eCity[RandomHelper.randomInt(0, Environments.eCity.length)].name);
-        QuestDescription = QuestDescription.replace('$eDungeon', Environments.eDungeon[RandomHelper.randomInt(0, Environments.eDungeon.length)].name);
+        description = description.replace('$eCity', Environments.eCity[RandomHelper.randomInt(0, Environments.eCity.length)].name);
+        description = description.replace('$eDungeon', Environments.eDungeon[RandomHelper.randomInt(0, Environments.eDungeon.length)].name);
 
-        quests.push(QuestDescription);
+        var duration = QuestMetaData.difficulty * level + RandomHelper.randomInt(900, 1200);
+        var quest = new Quest({
+            description: description,
+            gold: QuestMetaData.difficulty * RandomHelper.randomInt(1, 10) + level * RandomHelper.randomInt(5, 10),
+            duration: duration,
+            experience: level * RandomHelper.randomInt(10, 30),
+            level: level,
+            difficulty: QuestMetaData.difficulty
+        });
+
+        quests.push(quest);
     }
     return quests;
 }

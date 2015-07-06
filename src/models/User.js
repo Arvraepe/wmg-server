@@ -3,7 +3,8 @@ var mongoose = require('mongoose');
 var UserSchema = mongoose.Schema({
     username: String,
     password: String,
-    salt: String
+    salt: String,
+    session: String
 });
 
 var User = mongoose.model('User', UserSchema);

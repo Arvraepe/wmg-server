@@ -1,6 +1,6 @@
 exports.meta = [
     { quest: '$pCommon asked if you could go grab some $iCommon', difficulty: 2 },
-    { quest: 'Your $pFamily wanted you to get some grab some $iCommon', difficulty: 1 },
+    { quest: 'Your $pFamily wanted you to get some $iCommon', difficulty: 1 },
     { quest: '$pImportant requested you to find some $iExquisite', difficulty: 10 },
     { quest: '$pRoyalty has kindly requested you to find $iUnique', difficulty: 25 },
     { quest: '$pCommon wants you to kill of some $pMonster', difficulty: 3 },

@@ -3,6 +3,7 @@ var CallbackHandler = require('../infrastructure/CallbackHandler.js');
 var SHA1 = require('sha1');
 var UUID = require('node-uuid');
 
+require('../models/User.js');
 User = mongoose.model('User');
 
 function create (config) {
@@ -49,5 +50,17 @@ function authenticate (config) {
 
 }
 
+function check (session, callback) {
+    User.findOne({ session: session },
+        CallbackHandler.defaultCallback.bind({},{
+            onSuccess: function (user) {
+                if (user === null) { callback(null); } else { callback(user); }
+            },
+            onFail: function () { callback(null); }
+        })
+    );
+}
+
 exports.create = create;
 exports.authenticate = authenticate;
+exports.check = check;

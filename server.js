@@ -1,4 +1,4 @@
-
+var _ = require('underscore');
 /**
  * Database initialization
  */
@@ -15,10 +15,13 @@ require('./src/models/Quest');
  */
 var restify = require('restify');
 var S = restify.createServer();
-    S.use(restify.bodyParser());
+    S.use(restify.queryParser());
+    S.use (restify.bodyParser());
+    S.use (require('./src/infrastructure/AuthenticationHandler.js').authenticationParser);
 
 // Initialize the routes
 require('./src/routes/AuthenticationRoutes.js').init(S);
+require('./src/routes/InformationRoutes.js').init(S);
 
 /**
  * Starting the server
