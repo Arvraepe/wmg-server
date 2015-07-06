@@ -22,6 +22,7 @@ var S = restify.createServer();
 // Initialize the routes
 require('./src/routes/AuthenticationRoutes.js').init(S);
 require('./src/routes/InformationRoutes.js').init(S);
+require('./src/routes/QuestRoutes.js').init(S);
 
 /**
  * Starting the server

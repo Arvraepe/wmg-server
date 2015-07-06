@@ -4,4 +4,4 @@ exports.init = function (S) {
     S.get('/info/whoami', function (req, res){
         res.send({ you: req.user });
     });
-}
+};
