@@ -12,5 +12,10 @@ var QuestSchema = mongoose.Schema({
 
 var Quest = mongoose.model('Quest', QuestSchema);
 
+exports.AVAILABLE = "AVAILABLE";
+exports.PENDING = 'PENDING';
+exports.FINISHED = 'FINISHED';
+exports.NOTIFIED = 'NOTIFIED';
+
 
 
