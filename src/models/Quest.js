@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 
 var QuestSchema = mongoose.Schema({
+    user: String,
     description: String,
     gold: Number,
     level: Number,

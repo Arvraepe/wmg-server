@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var _ = require('underscore');
 
 var CallbackHandler = require('../infrastructure/CallbackHandler.js');
+var DatabaseHelper = require('../infrastructure/DatabaseHelper.js');
 var RandomHelper = require('../infrastructure/RandomHelper.js');
 
 var All = require('../data/All.js');
@@ -55,7 +56,9 @@ var RandomPicker = function (level, need) {
     return All.map[type][RandomHelper.randomInt(0, All.map[type].length)];
 };
 
-function createRandomQuests (lvl, amount) {
+function createRandomQuests (user, amount) {
+    var lvl = user.level;
+
     var quests = [];
     for (var i = amount; i > 0; i--) {
         var maxDiff = 2;
@@ -73,6 +76,7 @@ function createRandomQuests (lvl, amount) {
         var description = _.keys(FilledNeeds).reduce(function (description, need) { return description.replace("$"+need, FilledNeeds[need].name); }, QuestMetaData.quest);
 
         var QuestData = {
+            user: user.username,
             gold: RandomHelper.randomInt(level*10, level*20) + (difficulty * 10),
             level: level,
             // between 10 and 20 minutes base time
@@ -99,4 +103,23 @@ function createRandomQuests (lvl, amount) {
     return quests;
 }
 
-exports.createRandomQuests = createRandomQuests;
+//QuestRepository.generateQuestsForUser({
+//    user: req.user,
+//    onSuccess: function (quests) { ResponseHandler.sendSuccessResponse(res, quests); },
+//    onFail: function (error) { ResponseHandler.sendFailResponse(res, error); }
+//});
+
+function generateQuestsForUser (config) {
+    var quests = createRandomQuests(config.user, 10);
+    Quest.remove({ user: config.user.username }, function (err) {
+        if (err && config.onFail) config.onFail([{ level: 'error', message: 'Could not delete old quests' }]);
+        else
+            DatabaseHelper.saveAll({
+                arr: quests,
+                onSuccess: config.onSuccess,
+                onFail: config.onFail
+            });
+    });
+}
+
+exports.generateQuestsForUser = generateQuestsForUser;
