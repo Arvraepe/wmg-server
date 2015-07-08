@@ -1,10 +1,15 @@
 var QuestRepository = require('../repositories/QuestRepository.js');
+var ResponseHandler = require('../infrastructure/ResponseHandler.js');
 
 exports.init = function (S) {
     console.log('Initialized quest routes');
 
     S.get('/quest/list', function (req, res){
-        res.send(QuestRepository.createRandomQuests(req.user.level));
+        QuestRepository.getQuests({
+            conditions: { user: req.user.username },
+            onSuccess: function (quests) { ResponseHandler.sendSuccessResponse(res, quests); },
+            onFail: function (error) { ResponseHandler.sendFailResponse(res, [{ level: 'error', message: error }]); }
+        });
     });
 
     S.get('/quest/last', function (req, res){

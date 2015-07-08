@@ -76,6 +76,7 @@ function createRandomQuests (user, amount) {
         var description = _.keys(FilledNeeds).reduce(function (description, need) { return description.replace("$"+need, FilledNeeds[need].name); }, QuestMetaData.quest);
 
         var QuestData = {
+            inputId: i,
             user: user.username,
             gold: RandomHelper.randomInt(level*10, level*20) + (difficulty * 10),
             level: level,
@@ -122,4 +123,12 @@ function generateQuestsForUser (config) {
     });
 }
 
+function getQuests (config) {
+    Quest.find(config.conditions, CallbackHandler.defaultCallback.bind({},{
+        onSuccess: config.onSuccess,
+        onFail: config.onFail
+    }))
+}
+
 exports.generateQuestsForUser = generateQuestsForUser;
+exports.getQuests = getQuests;
