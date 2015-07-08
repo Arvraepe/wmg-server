@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
+var _ = require('underscore');
+
 var CallbackHandler = require('../infrastructure/CallbackHandler.js');
 var SHA1 = require('sha1');
 var UUID = require('node-uuid');
@@ -73,13 +75,18 @@ function check (session, callback) {
 }
 
 function startQuest (config) {
-    if (config.user.currentQuest) config.onFail('You are already on a quest, you should finish it before starting a new one');
-    else User.update({ currentQuest: config.quest },
-        CallbackHandler.defaultCallback.bind({},{
-            onSuccess: config.onSuccess,
-            onFail: function () { config.onFail('Starting the quest failed, please try again') }
-        })
-    );
+    if (!_.isEmpty(config.user.currentQuest)) config.onFail('You are already on a quest, you should finish it before starting a new one');
+    else {
+        config.quest.status = 'PENDING';
+        config.quest.maxDuration = config.quest.duration;
+        console.log(config.quest);
+        User.update({ username: config.user.username }, { currentQuest: config.quest },
+            CallbackHandler.defaultCallback.bind({},{
+                onSuccess: config.onSuccess,
+                onFail: function () { config.onFail('Starting the quest failed, please try again') }
+            })
+        );
+    }
 }
 
 exports.create = create;
