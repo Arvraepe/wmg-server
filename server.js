@@ -6,9 +6,9 @@ var mongoose = require('mongoose');
     mongoose.connect('mongodb://localhost/wmg');
 
 // Initialize the models
-require('./src/models/User');
-require('./src/models/Item');
 require('./src/models/Quest');
+require('./src/models/Item');
+require('./src/models/User');
 
 /**
  * Rest API initialization

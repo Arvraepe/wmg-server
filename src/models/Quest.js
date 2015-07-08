@@ -13,7 +13,7 @@ var QuestSchema = mongoose.Schema({
     loot: Number
 });
 
-var Quest = mongoose.model('Quest', QuestSchema);
+exports.Model = mongoose.model('Quest', QuestSchema);
 
 exports.AVAILABLE = "AVAILABLE";
 exports.PENDING = 'PENDING';

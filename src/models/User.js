@@ -1,3 +1,4 @@
+var Quest = require('./Quest.js').Model;
 var mongoose = require('mongoose');
 
 var UserSchema = mongoose.Schema({
@@ -16,7 +17,21 @@ var UserSchema = mongoose.Schema({
     endurance: Number,
     maxHP: Number,
     currentHP: Number,
-    gold: Number
+    gold: Number,
+    // Quest
+    currentQuest: {
+        inputId: String,
+        user: String,
+        description: String,
+        gold: Number,
+        level: Number,
+        duration: Number,
+        experience: Number,
+        difficulty: Number,
+        state: String,
+        loot: Number
+    }
+
 });
 
 var User = mongoose.model('User', UserSchema);

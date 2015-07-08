@@ -72,6 +72,17 @@ function check (session, callback) {
     );
 }
 
+function startQuest (config) {
+    if (config.user.currentQuest) config.onFail('You are already on a quest, you should finish it before starting a new one');
+    else User.update({ currentQuest: config.quest },
+        CallbackHandler.defaultCallback.bind({},{
+            onSuccess: config.onSuccess,
+            onFail: function () { config.onFail('Starting the quest failed, please try again') }
+        })
+    );
+}
+
 exports.create = create;
 exports.authenticate = authenticate;
 exports.check = check;
+exports.startQuest = startQuest;

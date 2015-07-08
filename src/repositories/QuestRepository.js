@@ -5,10 +5,9 @@ var CallbackHandler = require('../infrastructure/CallbackHandler.js');
 var DatabaseHelper = require('../infrastructure/DatabaseHelper.js');
 var RandomHelper = require('../infrastructure/RandomHelper.js');
 
+var UserRepository = require('../repositories/UserRepository.js');
+
 var All = require('../data/All.js');
-//var People = require('../data/People.js');
-//var Items = require('../data/Items.js');
-//var Environments = require('../data/Environments.js');
 var Quests = require('../data/Quests.js');
 
 var QuestModel = require('../models/Quest.js');
@@ -130,5 +129,22 @@ function getQuests (config) {
     }))
 }
 
+function startQuest (config) {
+    Quest.findOne({ user: config.user.username, inputId: config.inputId }, CallbackHandler.defaultCallback.bind({},{
+        onSuccess: function (quest) {
+            if (quest) {
+                UserRepository.startQuest({
+                    user: config.user,
+                    quest: quest,
+                    onSuccess: config.onSuccess,
+                    onFail: config.onFail
+                });
+            } else config.onFail([{ level: 'error', message: 'Could not find the quest you want to start' }]);
+        },
+        onFail: config.onFail
+    }));
+}
+
 exports.generateQuestsForUser = generateQuestsForUser;
 exports.getQuests = getQuests;
+exports.startQuest = startQuest;

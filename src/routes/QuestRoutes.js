@@ -17,7 +17,12 @@ exports.init = function (S) {
     });
 
     S.post('/quest/start', function (req, res){
-        res.send({ sent: req.body, message: 'to be implemented' });
+        QuestRepository.startQuest({
+            inputId: req.body.inputId,
+            user: req.user,
+            onSuccess: function (result) { ResponseHandler.sendSuccessResponse(res, result); },
+            onFail: function (error) { ResponseHandler.sendFailResponse(res, [{ level: 'error', message: error }]); }
+        });
     });
 
     S.post('/quest/cancel', function (req, res){
