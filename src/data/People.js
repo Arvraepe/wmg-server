@@ -95,14 +95,3 @@ exports.pRoyalty = [
     { name: 'Countess Melisentia', gold: 235 },
     { name: 'Queen Alesia', gold: 245 }
 ];
-
-exports.pFamily = [
-    { name: 'mother' },
-    { name: 'father' },
-    { name: 'brother' },
-    { name: 'sister' },
-    { name: 'aunt' },
-    { name: 'uncle' },
-    { name: 'nephew' },
-    { name: 'niece' }
-];

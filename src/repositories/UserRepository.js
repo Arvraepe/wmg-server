@@ -12,7 +12,18 @@ function create (config) {
     var user = new User({
         username: config.user.username,
         password: SHA1(salt+config.user.password),
-        salt: salt
+        salt: salt,
+        level: 1,
+        experience: 0,
+        strength: 10,
+        intelligence: 8,
+        lore: 6,
+        agility: 6,
+        speed: 6,
+        endurance: 5,
+        maxHP: 50,
+        currentHP: 50,
+        gold: 100
     });
 
     user.save (

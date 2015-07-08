@@ -1,8 +1,10 @@
+var QuestRepository = require('../repositories/QuestRepository.js');
+
 exports.init = function (S) {
     console.log('Initialized quest routes');
 
     S.get('/quest/list', function (req, res){
-        res.send({ message: 'to be implemented' });
+        res.send(QuestRepository.createRandomQuests(req.user.level));
     });
 
     S.get('/quest/last', function (req, res){

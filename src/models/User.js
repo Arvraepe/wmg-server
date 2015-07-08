@@ -4,7 +4,19 @@ var UserSchema = mongoose.Schema({
     username: String,
     password: String,
     salt: String,
-    session: String
+    session: String,
+    // Character
+    level: Number,
+    experience: Number,
+    strength: Number,
+    intelligence: Number,
+    lore: Number,
+    agility: Number,
+    speed: Number,
+    endurance: Number,
+    maxHP: Number,
+    currentHP: Number,
+    gold: Number
 });
 
 var User = mongoose.model('User', UserSchema);

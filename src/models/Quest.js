@@ -7,7 +7,8 @@ var QuestSchema = mongoose.Schema({
     duration: Number,
     experience: Number,
     difficulty: Number,
-    state: String
+    state: String,
+    loot: Number
 });
 
 var Quest = mongoose.model('Quest', QuestSchema);
