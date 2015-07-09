@@ -73,6 +73,7 @@ function createRandomQuests (user, amount) {
 
         var FilledNeeds = QuestMetaData.needs.reduce(function (obj, need) { obj[need] = RandomPicker(lvl, need); return obj; }, {});
         var description = _.keys(FilledNeeds).reduce(function (description, need) { return description.replace("$"+need, FilledNeeds[need].name); }, QuestMetaData.quest);
+        var duration = (RandomHelper.randomInt(600, 1200) + (difficulty * 100));
 
         var QuestData = {
             inputId: i,
@@ -80,7 +81,8 @@ function createRandomQuests (user, amount) {
             gold: RandomHelper.randomInt(level*10, level*20) + (difficulty * 10),
             level: level,
             // between 10 and 20 minutes base time
-            duration: (RandomHelper.randomInt(600, 1200) + (difficulty * 100)),
+            duration: duration,
+            maxDuration: duration,
             experience: RandomHelper.randomInt(level * 20, level * 50) + (difficulty * 12),
             difficulty: difficulty,
             state: QuestModel.AVAILABLE,
@@ -111,14 +113,16 @@ function createRandomQuests (user, amount) {
 
 function generateQuestsForUser (config) {
     var quests = createRandomQuests(config.user, 10);
+    console.log(quests);
     Quest.remove({ user: config.user.username }, function (err) {
         if (err && config.onFail) config.onFail([{ level: 'error', message: 'Could not delete old quests' }]);
-        else
+        else {
             DatabaseHelper.saveAll({
                 arr: quests,
                 onSuccess: config.onSuccess,
                 onFail: config.onFail
             });
+        }
     });
 }
 
@@ -145,6 +149,26 @@ function startQuest (config) {
     }));
 }
 
+function getOne (config) {
+    Quest.findOne(config.conditions,
+        CallbackHandler.defaultCallback.bind({},{
+            onSuccess: config.onSuccess,
+            onFail: config.onFail
+        })
+    );
+}
+
+function update (config) {
+    Quest.update(config.conditions, config.changes,
+        CallbackHandler.defaultCallback.bind({},{
+            onSuccess: config.onSuccess,
+            onFail: config.onFail
+        })
+    );
+}
+
+exports.update = update;
+exports.getOne = getOne;
 exports.generateQuestsForUser = generateQuestsForUser;
 exports.getQuests = getQuests;
 exports.startQuest = startQuest;

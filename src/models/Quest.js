@@ -7,6 +7,7 @@ var QuestSchema = mongoose.Schema({
     gold: Number,
     level: Number,
     duration: Number,
+    maxDuration: Number,
     experience: Number,
     difficulty: Number,
     state: String,

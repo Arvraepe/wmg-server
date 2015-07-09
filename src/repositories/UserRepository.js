@@ -8,6 +8,9 @@ var UUID = require('node-uuid');
 require('../models/User.js');
 User = mongoose.model('User');
 
+require('../models/Quest.js');
+Quest = mongoose.model('Quest');
+
 function create (config) {
 
     var salt = UUID.v1();
@@ -75,20 +78,36 @@ function check (session, callback) {
 }
 
 function startQuest (config) {
-    if (!_.isEmpty(config.user.currentQuest)) config.onFail('You are already on a quest, you should finish it before starting a new one');
+    if (!!config.user.currentQuest) config.onFail('You are already on a quest, you should finish it before starting a new one');
     else {
-        config.quest.status = 'PENDING';
-        config.quest.maxDuration = config.quest.duration;
-        console.log(config.quest);
-        User.update({ username: config.user.username }, { currentQuest: config.quest },
+        User.update({ username: config.user.username }, { currentQuest: config.quest._id },
             CallbackHandler.defaultCallback.bind({},{
-                onSuccess: config.onSuccess,
+                onSuccess: function () {
+                    Quest.update({ _id: config.quest._id }, { state: 'PENDING' },
+                        CallbackHandler.defaultCallback.bind({},{
+                            onSuccess: function () {
+                                config.onSuccess();
+                            },
+                            onFail: function () { config.onFail('Starting the quest failed, please try again') }
+                        })
+                    );
+                },
                 onFail: function () { config.onFail('Starting the quest failed, please try again') }
             })
         );
     }
 }
 
+function update (config) {
+    User.update(config.conditions, config.changes,
+        CallbackHandler.defaultCallback.bind({},{
+            onSuccess: config.onSuccess,
+            onFail: config.onFail
+        })
+    );
+}
+
+exports.update = update;
 exports.create = create;
 exports.authenticate = authenticate;
 exports.check = check;

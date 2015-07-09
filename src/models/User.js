@@ -19,20 +19,7 @@ var UserSchema = mongoose.Schema({
     currentHP: Number,
     gold: Number,
     // Quest
-    currentQuest: {
-        inputId: String,
-        user: String,
-        description: String,
-        gold: Number,
-        level: Number,
-        duration: Number,
-        maxDuration: Number,
-        experience: Number,
-        difficulty: Number,
-        state: String,
-        loot: Number
-    }
-
+    currentQuest: String
 });
 
 var User = mongoose.model('User', UserSchema);

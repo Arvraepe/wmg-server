@@ -29,4 +29,8 @@ require('./src/routes/QuestRoutes.js').init(S);
  */
 S.listen(8080, function () {
     console.log('%s listening at %s', S.name, S.url);
+
+    // Starting the timers on the server
+    require('./src/timers/QuestUpdateTimer.js').start();
+
 });
