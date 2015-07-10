@@ -1,5 +1,5 @@
 exports.meta = [
-    { needs: ['QuestGiver', 'Items'], quest: '$QuestGiver asked if you could go grab some $Items', minLevel: 1, canLoot: true },
+    { needs: ['QuestGiver', 'Items'], quest: '$QuestGiver asked if you could go find $Items', minLevel: 1, canLoot: true },
     { needs: ['QuestGiver', 'UniqueItem'], quest: '$QuestGiver wants you to find $UniqueItem', minLevel: 10, canLoot: true },
     { needs: ['QuestGiver', 'Monsters'], quest: '$QuestGiver wants you to kill some $Monsters', minLevel: 2, canLoot: true },
     { needs: ['QuestGiver', 'UniqueMonster'], quest: '$QuestGiver wants you to slay $UniqueMonster', minLevel: 12, canLoot: true },

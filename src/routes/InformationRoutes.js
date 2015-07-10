@@ -22,22 +22,27 @@ exports.init = function (S) {
                 conditions: { _id: req.user.currentQuest },
                 onSuccess: function (quest) {
 
-                    // TODO: Get LOOT from quest
                     if (quest.state === 'FINISHED') {
                         QuestRepository.update({
                             conditions: { _id: req.user.currentQuest },
                             changes: { state: 'NOTIFIED' },
                             onSuccess: function () {
-                                UserRepository.update({
-                                    conditions: { username: req.user.username },
-                                    changes: { currentQuest: null },
-                                    onSuccess: function () {
-                                        res.send({
-                                            success: true,
-                                            data: 'You have completed your quest! You received: \n Gold: '+quest.gold+ '\n Experience: '+quest.experience
-                                        });
-                                    }
-                                });
+
+                                // Add Loot
+
+
+//                                UserRepository.update({
+//                                    conditions: { username: req.user.username },
+//                                    changes: { currentQuest: null },
+//                                    onSuccess: function () {
+//                                        res.send({
+//                                            success: true,
+//                                            data: {
+//                                                completedQuest: quest
+//                                            }
+//                                        });
+//                                    }
+//                                });
                             }
                         });
                     } else {
@@ -45,7 +50,12 @@ exports.init = function (S) {
                         var percentage = 100 - Math.floor((duration * 100 / quest.maxDuration));
                         res.send({
                             success: true,
-                            data: 'You are on a quest! \n'+quest.description+'\nCompleted: '+percentage+'%'
+                            data: {
+                                ongoingQuest: {
+                                    quest: quest,
+                                    percentage: percentage
+                                }
+                            }
                         });
                     }
 

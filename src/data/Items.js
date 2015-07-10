@@ -37,7 +37,7 @@ exports.decorations = [
     { name: 'of bag space', effects:  { space: { min: 20, max: 50 } } }
 ];
 
-exports.objects = [
+exports.equipment = [
     { name: 'sword', slot: 'main', type: 'melee', weight: 2, value: 35, effects: { damage: 5 } },
     { name: 'javelin', slot: 'main', type: 'melee', weight: 1, value: 35, effects: { damage: 4 } },
     { name: 'staff', slot: 'main', type: 'magic', weight: 1, value: 40, effects: { damage: 4 } },
@@ -74,14 +74,50 @@ exports.consumables = [
 // Quest items
 
 exports.iCommon = [
-    { name: 'apples' }
+    { name: 'some apples', gold: 2 },
+    { name: 'some oranges', gold: 3 },
+    { name: 'potatoes', gold: 2 },
+    { name: 'a broom', gold: 3 },
+    { name: 'an electric conductor', gold: 10 },
+    { name: 'an old cartographer\'s map', gold: 20 },
+    { name: 'some beetles', gold: 1 },
+    { name: 'some paper', gold: 2 },
+    { name: 'a wooden stick', gold: 3 },
+    { name: 'a log', gold: 1 },
+    { name: 'a wooden leg', gold: 6 },
+    { name: 'a fine net', gold: 8 },
+    { name: 'a new hat', gold: 2 },
+    { name: 'a bear hat', gold: 3 },
+    { name: 'a pair of shoes', gold: 1 },
+    { name: 'some herbs', gold: 1 },
+    { name: 'a chair', gold: 1 },
+    { name: 'a burnt piece of chicken', gold: 1 },
+    { name: 'food', gold: 2 },
+    { name: 'a human bone', gold: 5, difficulty: 1 },
+    { name: 'seven ducks', gold: 3 },
+    { name: 'a cocktail shaker', gold: 6 }
 ];
 
 exports.iExquisite = [
-    { name: 'jewelry' }
+    { name: 'a lost golden necklace', gold: 30 },
+    { name: 'a hexacore supercomputer', gold: 40  },
+    { name: 'a lost silver necklace', gold: 20 },
+    { name: 'silk robes', gold: 40 },
+    { name: 'exquisite herbs', gold: 20 },
+    { name: 'exotic herbs', gold: 30 },
+    { name: 'some gin to drink', gold: 20 },
+    { name: 'a bride', gold: 60 },
+    { name: 'a golden sword', gold: 60 },
+    { name: 'a golden dagger', gold: 50 },
+    { name: 'sixty six friends', gold: 40 },
+    { name: 'a hidden letter of the spouse', gold: 35 },
+    { name: 'a telescope', gold: 40 },
+    { name: 'an alembic', gold: 20 },
+    { name: 'golden scales', gold: 40 }
 ];
 
 exports.iUnique = [
-    { name: 'sword of a thousand truths' }
+    { name: 'sword of a thousand truths', gold: 100 },
+    { name: 'uniqueItem', gold: 100 },
 ];
 
